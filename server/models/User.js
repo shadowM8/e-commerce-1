@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { encryptPass } = require('../helpers/util')
 
 const userSchema = new Schema({
     email: {
@@ -15,7 +16,7 @@ const userSchema = new Schema({
         required: [true, `password must be filled`],
         minlength: [5, 'password minimum length is 5 characters']
     },
-    image : {
+    image: {
         type: String,
         default: `https://iweek.org.za/wp-content/uploads/2015/09/no-profile-photo1.jpg`
     },
