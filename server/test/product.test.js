@@ -423,33 +423,7 @@ describe(`testing endpoint product`, function () {
     })
 
     describe(`DELETE /products/:productId delete product data by product seller `, function() {
-        describe(`DELETE /products/ success case`, function(){
-            it(`should send response with status code 200 and deleted object data`, function(done){
-                chai
-                    .request(app)
-                    .delete(`/products/${productId}`)
-                    .set('access_token', accessToken)
-                    .end(function(err,res) {
-                        expect(err).to.be.null
-                        expect(res).to.have.status(200)
-                        expect(res).to.be.an('object')
-                        expect(res.body)
-                        expect(res.body).to.have.property('_id')
-                        expect(res.body).to.have.property('name')
-                        expect(res.body).to.have.property('description')
-                        expect(res.body).to.have.property('image')
-                        expect(res.body).to.have.property('stock')
-                        expect(res.body).to.have.property('price')
-                        expect(res.body).to.have.property('seller')
-                        expect(res.body.name).to.equal(dedata.name)
-                        expect(res.body.description).to.equal(dedata.description)
-                        expect(res.body.stock).to.equal(dedata.stock)
-                        expect(res.body.price).to.equal(dedata.price)
-                        expect(res.body._id).to.equal(productId)
-                        done()
-                    })
-            })
-        })
+        
         describe(`DELETE /products/ failed case`, function(){
             it(`should send response with status code 401 and message 'unauthorized access' when other seller try to delete product `, function (done) {
                 chai
@@ -476,6 +450,34 @@ describe(`testing endpoint product`, function () {
                         expect(res).to.be.an('object')
                         expect(res.body).to.have.property('message')
                         expect(res.body.message).to.equal('product not found')
+                        done()
+                    })
+            })
+        })
+        describe(`DELETE /products/ success case`, function(){
+            it(`should send response with status code 200 and deleted object data`, function(done){
+                chai
+                    .request(app)
+                    .delete(`/products/${productId}`)
+                    .set('access_token', accessToken)
+                    .end(function(err,res) {
+                        
+                        expect(err).to.be.null
+                        expect(res).to.have.status(200)
+                        expect(res).to.be.an('object')
+                        expect(res.body)
+                        expect(res.body).to.have.property('_id')
+                        expect(res.body).to.have.property('name')
+                        expect(res.body).to.have.property('description')
+                        expect(res.body).to.have.property('image')
+                        expect(res.body).to.have.property('stock')
+                        expect(res.body).to.have.property('price')
+                        expect(res.body).to.have.property('seller')
+                        expect(res.body.name).to.equal(dedata.name)
+                        expect(res.body.description).to.equal(dedata.description)
+                        expect(res.body.stock).to.equal(dedata.stock)
+                        expect(res.body.price).to.equal(dedata.price)
+                        expect(res.body._id).to.equal(productId)
                         done()
                     })
             })

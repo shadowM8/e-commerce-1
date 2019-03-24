@@ -18,10 +18,21 @@ module.exports = {
                     .json(product)
             })
             .catch(err => {
-                // console.log(err)
+                console.log(err)
                 res
                 .status(500)
                 .json(err)
+            })
+    },
+    getOne: (req,res) => {
+        Product
+            .findOne({_id: req.params.productId}).populate('seller')
+            .then(product => {
+                res.status(200).json(product)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json(err)
             })
     },
     getAll: (req, res) => {
@@ -59,7 +70,8 @@ module.exports = {
         if (image.length) {
             input.image = image
         }
-
+        console.log(input)
+        console.log(req.body)
         Product
             .findByIdAndUpdate(req.params.productId, { $set: input }, { new: true })
             .then(product => {
@@ -79,7 +91,7 @@ module.exports = {
         Product
             .findByIdAndDelete(req.params.productId)
             .then(product => {
-                if (product) res.status(400).json({ message: `product not found` })
+                if (!product) res.status(400).json({ message: `product not found` })
                 res
                 .status(200)
                 .json(product)

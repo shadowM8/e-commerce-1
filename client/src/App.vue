@@ -23,8 +23,8 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Mini</span>
-        <span class="font-weight-light">StackFlow</span>
+        <span>Shopping</span>
+        <span class="font-weight-light"> E-Commerce</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu :nudge-width="-100">
@@ -32,11 +32,11 @@
           Toolbar
         </v-toolbar-title>
         <v-list>
-          <v-list-tile :to="'/page1'">
-            Settings
+          <v-list-tile :to="'/auth'">
+            Auth
           </v-list-tile>
           <v-list-tile :to="'/page2'">
-            <v-list-tile-title v-text="'Account'"></v-list-tile-title>
+            <v-list-tile-title >Cart</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -63,17 +63,17 @@ export default {
   data() {
     return {
       icons: ["dashboard", "home", "event"],
-      title : ["DASHBOARD","HOME","TAG"],
-      page : ["/dashboard","/", "event"],
+      title : ["AUTH","HOME","TAG"],
+      page : ["/auth","/", "event"],
       
     };
   },
   created() {
     if(localStorage.getItem('token')) {
       this.$store.commit('mutateIsLogin', true)
-      this.$store.commit('mutateUserName', localStorage.username)
+      this.$store.commit('mutateUserName', localStorage.userName)
     }
-    this.$store.dispatch('getAllQuestion')
+    this.$store.dispatch('getAllProducts')
   },
   computed : {
     user(){

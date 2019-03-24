@@ -7,17 +7,20 @@ function authorize(req, res, next) {
       _id: req.params.productId
     })
     .then(product => {
+      
       if (!product) res.status(400).json({ message: 'product not found' })
 
-      else if (product.seller.toString() == req.authenticUser.id.toString()) {
-        next()
-      } else {
-        res
-          .status(401)
-          .json({
-            message: "unauthorized access"
-          })
-      }
+      else {
+        if (String(product.seller) === String(req.authenticUser.id)) {
+          next()
+        } else {
+          res
+            .status(401)
+            .json({
+              message: "unauthorized access"
+            })
+        }
+      } 
     })
     .catch(err => {
       console.log(err)
