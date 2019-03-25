@@ -10,6 +10,8 @@ router.patch('/', cartController.checkOut)
 
 router.use('/:cartId', authorizeCart )
 
+router.patch('/:cartId', cartController.confirm)
+
 router.delete('/:cartId', cartController.delete )
 
 module.exports = router

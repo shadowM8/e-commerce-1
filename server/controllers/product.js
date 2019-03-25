@@ -1,4 +1,5 @@
 const Product = require('../models/Product')
+const Cart = require('../models/Cart')
 
 module.exports = {
     create: (req, res) => {
@@ -33,6 +34,17 @@ module.exports = {
             .catch(err => {
                 console.log(err)
                 res.status(500).json(err)
+            })
+    },
+    getAllSellerProduct: (req,res) => {
+        Product
+            .find({seller: req.authenticUser.id}).populate('seller')
+            .then(products => {
+                res.status(200).json(products)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({message:'internal server error'})
             })
     },
     getAll: (req, res) => {

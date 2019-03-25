@@ -32,7 +32,7 @@ module.exports = {
                             email : user.email
                         }
                         let token = jwtSign(encryptData)
-                        res.status(200).json({access_token: token, fullName:user.fullName, userId:user._id})
+                        res.status(200).json({access_token: token, fullName:user.fullName, userId:user._id, role:user.role})
                     }
                 }
             })

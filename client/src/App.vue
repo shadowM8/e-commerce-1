@@ -18,6 +18,12 @@
             USER {{user}}
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-content v-if="isAdmin">
+            <a :to="{ path: '/admin'}"><v-icon>local_library</v-icon>
+            Admin Page</a>
+          </v-list-tile-content>
+        </v-list-tile>
         
       </v-list>
     </v-navigation-drawer>
@@ -74,10 +80,16 @@ export default {
       this.$store.commit('mutateUserName', localStorage.userName)
     }
     this.$store.dispatch('getAllProducts')
+    if(localStorage.getItem('admin')) {
+      this.$store.commit('mutateIsAdmin', true)
+    }
   },
   computed : {
     user(){
       return this.$store.state.username
+    },
+    isAdmin(){
+      return this.$store.state.isAdmin
     }
   }
 };

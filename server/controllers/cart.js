@@ -36,6 +36,25 @@ module.exports = {
                 res.status(500).json({ message: err })
             })
     },
+    confirm: (req,res) => {
+        let confirmationcart
+        Cart
+            .findOne({
+                _id: req.params.cartId
+            })
+            .then(cart => {
+                confirmationcart = cart
+                cart.confirmation = true
+                cart.save()
+            })
+            .then(()=>{
+                res.status(200).json(confirmationcart)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({message: `internal server error`})
+            })
+    },
     checkOut: (req, res) => {
         let checked
         Cart

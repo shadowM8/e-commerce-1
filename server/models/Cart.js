@@ -19,6 +19,10 @@ const cartSchema = new Schema({
     checkOut: {
         type: Boolean,
         default: false
+    },
+    confirmation: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 

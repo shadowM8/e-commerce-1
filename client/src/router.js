@@ -9,6 +9,7 @@ import AddProduct from './components/AddProduct.vue'
 import ProductDetail from './components/ProductDetail.vue'
 import Cart from './views/Cart.vue'
 import History from './views/History.vue'
+import Admin from './views/Admin.vue'
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
       path: '/history',
       component: History,
       name: 'History'
+    },
+    {
+      path: '/admin',
+      component: Admin,
+      name: 'Admin'
     }
     // {
     //   path: '/about',

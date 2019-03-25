@@ -11,6 +11,7 @@ export default new Vuex.Store({
     carts: [],
     history: [],
     username: 'username',
+    isAdmin: false,
     isLogin: false,
     productDetail: {
       name: '',
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     initialHistory(state, payload) {
       state.history = payload
+    },
+    mutateIsAdmin(state, payload) {
+      state.isAdmin = payload
     }
 
   },
@@ -55,7 +59,10 @@ export default new Vuex.Store({
       axios
         .post('/users/login', payload)
         .then(({ data }) => {
-          console.log(data)
+          if(data.role === 'admin'){
+            localStorage.setItem('admin', data.role)
+            context.commit('mutateIsAdmin', true)
+          }
           localStorage.setItem('token', data.access_token)
           localStorage.setItem('userId', data.userId)
           localStorage.setItem('userName', data.fullName)
@@ -81,10 +88,11 @@ export default new Vuex.Store({
             })
             context.commit('mutateIsLogin', false)
             context.commit('mutateUserName', null)
+            context.commit('mutateIsAdmin', false)
             localStorage.clear()
           }
           else {
-            swal("Enjoy your time in mini overflow");
+            swal("Enjoy your time in e - commerce");
           }
         })
         .catch(err => {
@@ -268,6 +276,21 @@ export default new Vuex.Store({
       axios({
         method: 'patch',
         url: `/carts/`,
+        headers: {
+          access_token: localStorage.getItem('token'),
+        }
+      })
+        .then(({data}) => {
+          context.dispatch('getAllCarts')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    confirmation(context,payload) {
+      axios({
+        method: 'patch',
+        url: `/carts/${payload}`,
         headers: {
           access_token: localStorage.getItem('token'),
         }
