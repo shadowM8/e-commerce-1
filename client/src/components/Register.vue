@@ -41,7 +41,7 @@ export default {
       this.redirect()
     },
     redirect () {
-        this.$router.push({ path: "/" })
+        this.$router.push({ path: "/auth" })
     }
   }
 }

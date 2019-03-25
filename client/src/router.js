@@ -7,6 +7,8 @@ import Register from './components/Register.vue'
 import AllProducts from './components/AllProducts.vue'
 import AddProduct from './components/AddProduct.vue'
 import ProductDetail from './components/ProductDetail.vue'
+import Cart from './views/Cart.vue'
+import History from './views/History.vue'
 
 Vue.use(Router)
 
@@ -52,6 +54,16 @@ export default new Router({
       ],
       
     },
+    {
+      path: '/carts',
+      component: Cart,
+      name: 'Cart'
+    },
+    {
+      path: '/history',
+      component: History,
+      name: 'History'
+    }
     // {
     //   path: '/about',
       // route level code-splitting

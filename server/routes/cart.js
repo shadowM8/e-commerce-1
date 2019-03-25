@@ -5,6 +5,7 @@ const authorizeCart = require('../middlewares/authorizeCart')
 
 router.use(authenticate)
 router.post('/',  cartController.create)
+router.get('/', cartController.getAll)
 router.patch('/', cartController.checkOut)
 
 router.use('/:cartId', authorizeCart )

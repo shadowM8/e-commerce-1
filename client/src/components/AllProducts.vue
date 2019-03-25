@@ -5,7 +5,7 @@
         <v-card>
           <v-layout>
             <v-flex xs3>
-              <v-layout ml-2 fill-height align-center justify-content-center >
+              <v-layout ml-2 fill-height align-center justify-content-center>
                 <v-img :src="product.image" aspect-ratio="2.75"></v-img>
               </v-layout>
             </v-flex>
@@ -19,8 +19,9 @@
                         <b>{{product.name}}</b>
                       </a>
                     </h3>
-                    <span class="grey--text">{{product.seller.fullName}}</span>
-                    <span class="black--text"> |    Stock left {{product.stock}}</span>
+                    <span class="grey--text">{{product.seller.fullName}} </span>
+                    <span class="grey--text">| Released {{beautyDate(product.createdAt)}} </span>
+                    <span class="black--text">| Stock left {{product.stock}}</span>
                   </div>
                 </v-card-title>
               </v-layout>
@@ -58,6 +59,14 @@ export default {
     };
   },
   methods: {
+    beautyDate(date) {
+      return new Date(date).toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    },
     fetchProductDetail(id) {
       this.$store.dispatch("fetchProductDetail", id);
       this.redirectProduct(id);
@@ -93,6 +102,8 @@ export default {
     products() {
       return this.$store.state.products;
     }
-  }
+  },
+  
+  
 };
 </script>

@@ -21,7 +21,8 @@
                   <h3 class="headline mb-0">
                     <b>{{product.name}}</b>
                   </h3>
-                  <span class="grey--text">{{product.seller.fullName}}</span>
+                  <span class="grey--text">{{product.seller.fullName}} </span>
+                  <span class="black--text"> | {{beautyDate(product.createdAt)}}</span>
                 </div>
               </v-card-title>
               <v-img :src="product.image" aspect-ratio="2.75"></v-img>
@@ -34,6 +35,12 @@
                 <v-dialog v-model="dialog">
                   <v-btn slot="activator" flat color="warning">Edit Product</v-btn>
                   <EditProduct @closedialog="closeDialog"/>
+                </v-dialog>
+              </v-card-actions>
+              <v-card-actions v-if="userId !== product.seller._id">
+                <v-dialog v-model="dialog">
+                  <v-btn slot="activator" flat color="success"><v-icon>shopping_cart</v-icon> Add Product To Cart</v-btn>
+                  <AddToCart @closedialog="closeDialog"/>
                 </v-dialog>
               </v-card-actions>
             </v-flex>
@@ -73,18 +80,16 @@
 </template>
 
 <script>
-// import { mapState } from "vuex";
 // import answers from "@/components/answer";
 import EditProduct from "@/components/EditProduct";
+import AddToCart from "@/components/AddToCart"
 import swal from "sweetalert";
 export default {
   components: {
-    EditProduct
+    EditProduct,
+    AddToCart
   },
   computed:
-    //   mapState([
-    //       'question'
-    //   ])
     {
       product() {
         return this.$store.state.productDetail;
@@ -95,17 +100,6 @@ export default {
   },
   data() {
     return {
-    //   product: {
-    //     name: "abc",
-    //     description: "abc",
-    //     image: "abc",
-    //     price: 11,
-    //     stock: 11,
-    //     seller: {
-    //         fullName: 'abc'
-    //     }
-    //   },
-      
       dialog: false,
       userId: localStorage.getItem("userId")
       //   upvoteColor: "blue",
@@ -116,6 +110,14 @@ export default {
   methods: {
     closeDialog(event) {
       this.dialog = event;
+    },
+    beautyDate(date) {
+      return new Date(date).toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
     }
     // addAnswer() {
     //   let dePayload = {

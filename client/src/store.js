@@ -8,6 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
+    carts: [],
+    history: [],
     username: 'username',
     isLogin: false,
     productDetail: {
@@ -36,6 +38,15 @@ export default new Vuex.Store({
     },
     mutateProductDetail(state, payload) {
       state.productDetail = payload
+    },
+    initialCarts(state, payload) {
+      state.carts = payload
+    },
+    mutateCarts(state, payload) {
+      state.carts.push(payload)
+    },
+    initialHistory(state, payload) {
+      state.history = payload
     }
 
   },
@@ -174,6 +185,95 @@ export default new Vuex.Store({
         .then(({data}) => {
           console.log('sukses edit data',data)
           context.dispatch('fetchProductDetail', data._id)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteProduct(context, payload) {
+      axios({
+        method: 'delete',
+        url: `/products/${payload}`,
+        headers: {
+          access_token: localStorage.getItem('token'),
+        }
+      })
+        .then(({data}) => {
+          console.log(`sukses delete data`,data)
+          context.dispatch('getAllProducts')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addProductToCart(context,payload){
+      axios({
+        method: 'post',
+        url: `/carts/`,
+        headers: {
+          access_token: localStorage.getItem('token'),
+        },
+        data: payload
+      })
+        .then(({data}) => {
+          context.commit('mutateCarts', data)
+          context.dispatch('getAllCarts')
+        })
+    },
+    getAllCarts(context) {
+      axios({
+        method: 'get',
+        url: `/carts/`,
+        headers: {
+          access_token: localStorage.getItem('token'),
+        },
+      })
+        .then(({ data }) => {
+          console.log(data)
+          let cartsProduct = []
+          let historyProduct = []
+          data.forEach(cart => {
+            if(cart.checkOut) {
+              historyProduct.push(cart)
+            }
+            else {
+              cartsProduct.push(cart)
+            }
+          })
+          context.commit('initialCarts', cartsProduct)
+          context.commit('initialHistory', historyProduct)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteCart(context,payload){
+      axios({
+        method: 'delete',
+        url: `/carts/${payload}`,
+        headers: {
+          access_token: localStorage.getItem('token'),
+        },
+      })
+        .then(({data}) => {
+          console.log(`deleted cart data: ${data}`)
+          context.dispatch('getAllCarts')
+          context.dispatch('getAllProducts')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    checkOut(context){
+      axios({
+        method: 'patch',
+        url: `/carts/`,
+        headers: {
+          access_token: localStorage.getItem('token'),
+        }
+      })
+        .then(({data}) => {
+          context.dispatch('getAllCarts')
         })
         .catch(err => {
           console.log(err)

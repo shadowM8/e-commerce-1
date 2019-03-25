@@ -48,14 +48,7 @@ export default {
     fileUpload(e) {
       this.product.image = e.target.files[0];
     },
-    editProduct() {
-      // let dataProduct = new FormData();
-      // dataProduct.append("image", this.product.image);
-      // dataProduct.append("name", this.product.name);
-      // dataProduct.append("description", this.product.description);
-      // dataProduct.append("price", this.product.price);
-      // dataProduct.append("stock", this.product.stock);
-      // console.log('ini dataProduct',dataProduct)
+    editProduct() {  
       let dataProduct = {
         name : this.product.name,
         description : this.product.description,

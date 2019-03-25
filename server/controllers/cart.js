@@ -47,6 +47,7 @@ module.exports = {
                 else {
                     carts.forEach(cart => {
                         cart.checkOut = true
+                        cart.save()
                     })
                     // checked = carts.map(cart => {
                     //     return {
@@ -63,11 +64,36 @@ module.exports = {
                 res.status(500).json({ message: `internal server error`, err })
             })
     },
+    getAll: (req,res) => {
+        Cart
+            .find({buyer: req.authenticUser.id}).populate('product').populate('buyer')
+            .then(carts => {
+                res.status(200).json(carts)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({message:`internal server error`})
+            })
+    },
     delete: (req,res) => {
+        let deletedCart
         Cart
             .findOneAndDelete({_id: req.params.cartId})
             .then(cart => {
-                res.status(200).json(cart)
+                // res.status(200).json(cart)
+                deletedCart = cart
+                return Product
+                    .findOne({ _id: cart.product })
+            })
+            .then(product => {
+                if(!product) throw `product not found`
+                else {
+                    product.stock = product.stock + deletedCart.quantity
+                    return product.save()
+                }
+            })
+            .then(()=>{
+                res.status(200).json(deletedCart)
             })
             .catch(err => {
                 console.log(err)

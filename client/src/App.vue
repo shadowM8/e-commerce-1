@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app fixed clipped width="190">
       <v-list>
-        <v-list-tile v-for="(i,index) in 3" :to="{path: page[i-1]}" :key="index">
+        <v-list-tile v-for="(i,index) in 4" :to="{path: page[i-1]}" :key="index">
           <v-list-tile-action>
             <v-icon>{{ icons[i-1] }}</v-icon>
           </v-list-tile-action>
@@ -35,7 +35,7 @@
           <v-list-tile :to="'/auth'">
             Auth
           </v-list-tile>
-          <v-list-tile :to="'/page2'">
+          <v-list-tile :to="'/carts'">
             <v-list-tile-title >Cart</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -62,9 +62,9 @@ export default {
   },
   data() {
     return {
-      icons: ["dashboard", "home", "event"],
-      title : ["AUTH","HOME","TAG"],
-      page : ["/auth","/", "event"],
+      icons: ["dashboard", "home", "shopping_cart","history"],
+      title : ["AUTH","HOME","CART","HISTORY"],
+      page : ["/auth","/", "/carts", "/history"],
       
     };
   },
