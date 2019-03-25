@@ -26,29 +26,29 @@
 
 <script>
 export default {
-    data() {
+  data () {
     return {
-      userId: localStorage.getItem("userId"),
+      userId: localStorage.getItem('userId'),
       quantity: 1
-    };
+    }
   },
   methods: {
-    closeDialog() {
-      this.$emit("closedialog", false);
+    closeDialog () {
+      this.$emit('closedialog', false)
     },
-    addProductToCart() {  
+    addProductToCart () {
       let dataCart = {
-        product : this.product._id,
-        quantity : this.quantity,
+        product: this.product._id,
+        quantity: this.quantity,
         buyer: this.userId
       }
-      this.$emit("closedialog", false);
-      this.$store.dispatch("addProductToCart", dataCart);
+      this.$emit('closedialog', false)
+      this.$store.dispatch('addProductToCart', dataCart)
     }
   },
   computed: {
-    product() {
-      return this.$store.state.productDetail;
+    product () {
+      return this.$store.state.productDetail
     }
   }
 }

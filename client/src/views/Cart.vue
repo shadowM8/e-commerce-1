@@ -49,102 +49,102 @@
 </template>
 
 <script>
-import axios from "@/api/axios.js";
-// import editform from "@/components/EditForm.vue"
+
+import swal from 'sweetalert'
 export default {
   components: {
     // editform
   },
-  name: "AllCarts",
-  data() {
+  name: 'AllCarts',
+  data () {
     return {
       // upvotes: 0,
       // downvotes: 0
-      userId: localStorage.getItem("userId"),
-      dialog: false,
-      
-    };
+      userId: localStorage.getItem('userId'),
+      dialog: false
+
+    }
   },
   methods: {
-    totalPrice(carts) {
-      let sum = 0;
+    totalPrice (carts) {
+      let sum = 0
       carts.forEach(cart => {
         //   console.log('ini isi',cart.product.price)
-        sum += (cart.product.price);
-      });
+        sum += (cart.product.price)
+      })
       return sum
     },
-    checkOut() {
+    checkOut () {
       swal({
-        title: "Warning",
-        text: "Are you sure you want to checkout with all this products?",
-        icon: "warning",
+        title: 'Warning',
+        text: 'Are you sure you want to checkout with all this products?',
+        icon: 'warning',
         buttons: true,
         dangerMode: true
       })
         .then(willCheckout => {
           if (willCheckout) {
-            swal("Thank you for buying in mini e-commerce", {
-              icon: "success"
-            });
-            this.$store.dispatch("checkOut");
+            swal('Thank you for buying in mini e-commerce', {
+              icon: 'success'
+            })
+            this.$store.dispatch('checkOut')
           } else {
-            swal("It's ok, take your time");
+            swal("It's ok, take your time")
           }
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
-    beautyPrice(price) {
-      return `Rp. ${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
+    beautyPrice (price) {
+      return `Rp. ${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
     },
-    beautyDate(date) {
-      return new Date(date).toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+    beautyDate (date) {
+      return new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
     },
-    fetchProductDetail(id) {
-      this.$store.dispatch("fetchProductDetail", id);
-      this.redirectProduct(id);
+    fetchProductDetail (id) {
+      this.$store.dispatch('fetchProductDetail', id)
+      this.redirectProduct(id)
       // kdfkdsksf
     },
-    redirectProduct(id) {
-      this.$router.push({ path: `/product/${id}` });
+    redirectProduct (id) {
+      this.$router.push({ path: `/product/${id}` })
     },
-    deleteCart(id) {
+    deleteCart (id) {
       swal({
-        title: "Warning",
-        text: "Are you sure you want remove this product from your cart?",
-        icon: "warning",
+        title: 'Warning',
+        text: 'Are you sure you want remove this product from your cart?',
+        icon: 'warning',
         buttons: true,
         dangerMode: true
       })
         .then(willDelete => {
           if (willDelete) {
-            swal("Poof! your cart is cleaner!", {
-              icon: "success"
-            });
-            this.$store.dispatch("deleteCart", id);
+            swal('Poof! your cart is cleaner!', {
+              icon: 'success'
+            })
+            this.$store.dispatch('deleteCart', id)
           } else {
-            swal("Phew, that was close one");
+            swal('Phew, that was close one')
           }
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
   },
   computed: {
-    carts() {
-      return this.$store.state.carts;
+    carts () {
+      return this.$store.state.carts
     }
   },
-  created() {
-    this.$store.dispatch("getAllCarts");
+  created () {
+    this.$store.dispatch('getAllCarts')
   }
-};
+}
 </script>

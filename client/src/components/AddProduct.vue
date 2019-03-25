@@ -32,34 +32,34 @@
 <script>
 // import VueFroala from "vue-froala-wysiwyg";
 export default {
-  data: function() {
+  data: function () {
     return {
-      name: "",
-      description: "",
-      price: "",
-      stock: "",
-      image: ""
-    };
+      name: '',
+      description: '',
+      price: '',
+      stock: '',
+      image: ''
+    }
   },
   methods: {
-    fileUpload(e) {
-      this.image = e.target.files[0];
+    fileUpload (e) {
+      this.image = e.target.files[0]
     },
-    addProduct() {
-        let dataProduct = new FormData()
-        dataProduct.append('image', this.image)
-        dataProduct.append('name', this.name)
-        dataProduct.append('description', this.description)
-        dataProduct.append('price', this.price)
-        dataProduct.append('stock', this.stock)
-      this.$store.dispatch("addProduct", dataProduct);
-      this.redirect();
+    addProduct () {
+      let dataProduct = new FormData()
+      dataProduct.append('image', this.image)
+      dataProduct.append('name', this.name)
+      dataProduct.append('description', this.description)
+      dataProduct.append('price', this.price)
+      dataProduct.append('stock', this.stock)
+      this.$store.dispatch('addProduct', dataProduct)
+      this.redirect()
     },
-    redirect() {
-      this.$router.push({ path: "/" });
+    redirect () {
+      this.$router.push({ path: '/' })
     }
   }
-};
+}
 </script>
 
 <style>

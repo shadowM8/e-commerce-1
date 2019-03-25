@@ -21,27 +21,27 @@
 <script>
 // import router from '@/router.js'
 export default {
-    data: function() {
+  data: function () {
     return {
-      email: "",
-      fullName : "",
-      role : "",
-      password: "",
-    };
+      email: '',
+      fullName: '',
+      role: '',
+      password: ''
+    }
   },
   methods: {
-    registerNow() {
+    registerNow () {
       let dePayLoad = {
         email: this.email,
         fullName: this.fullName,
-        role : this.role,
-        password : this.password
-      };
-      this.$store.dispatch("register", dePayLoad);
+        role: this.role,
+        password: this.password
+      }
+      this.$store.dispatch('register', dePayLoad)
       this.redirect()
     },
     redirect () {
-        this.$router.push({ path: "/auth" })
+      this.$router.push({ path: '/auth' })
     }
   }
 }

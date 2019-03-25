@@ -81,9 +81,9 @@
 
 <script>
 // import answers from "@/components/answer";
-import EditProduct from "@/components/EditProduct";
-import AddToCart from "@/components/AddToCart"
-import swal from "sweetalert";
+import EditProduct from '@/components/EditProduct'
+import AddToCart from '@/components/AddToCart'
+// import swal from 'sweetalert'
 export default {
   components: {
     EditProduct,
@@ -91,33 +91,33 @@ export default {
   },
   computed:
     {
-      product() {
-        return this.$store.state.productDetail;
+      product () {
+        return this.$store.state.productDetail
       }
     },
-  created() {
-    this.$store.dispatch("fetchProductDetail", this.$route.params.id);
+  created () {
+    this.$store.dispatch('fetchProductDetail', this.$route.params.id)
   },
-  data() {
+  data () {
     return {
       dialog: false,
-      userId: localStorage.getItem("userId")
+      userId: localStorage.getItem('userId')
       //   upvoteColor: "blue",
       //   downvoteColor: "blue",
       //   disabled: "false"
-    };
+    }
   },
   methods: {
-    closeDialog(event) {
-      this.dialog = event;
+    closeDialog (event) {
+      this.dialog = event
     },
-    beautyDate(date) {
-      return new Date(date).toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+    beautyDate (date) {
+      return new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
     }
     // addAnswer() {
     //   let dePayload = {
@@ -172,6 +172,5 @@ export default {
     //   }
     // }
   }
-};
+}
 </script>
-

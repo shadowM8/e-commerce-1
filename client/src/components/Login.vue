@@ -18,27 +18,27 @@
 
 <script>
 export default {
-    data: function() {
+  data: function () {
     return {
-      email: "",
-      password: "",
-    };
+      email: '',
+      password: ''
+    }
   },
   methods: {
-    loginNow() {
+    loginNow () {
       let dePayLoad = {
         email: this.email,
-        password : this.password
-      };
-      this.$store.dispatch("login", dePayLoad);
+        password: this.password
+      }
+      this.$store.dispatch('login', dePayLoad)
       this.redirect()
     },
-    redirect(){
-        this.$router.push({ path: "/" })
+    redirect () {
+      this.$router.push({ path: '/' })
     }
   },
   computed: {
-    isLogin(){
+    isLogin () {
       return this.$store.state.isLogin
     }
   }

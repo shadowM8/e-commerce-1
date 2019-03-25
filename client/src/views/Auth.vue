@@ -10,26 +10,26 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
     //   isLogin : ''
-    };
+    }
   },
   methods: {
-    logout() {
-      this.$store.dispatch("logout");
+    logout () {
+      this.$store.dispatch('logout')
       this.redirect()
     },
-    redirect(){
-        this.$router.push({ path: "/auth/" })
+    redirect () {
+      this.$router.push({ path: '/auth/' })
     }
   },
   computed: {
-    isLogin() {
-      return this.$store.state.isLogin;
+    isLogin () {
+      return this.$store.state.isLogin
     }
   }
-};
+}
 </script>
 
 <style>

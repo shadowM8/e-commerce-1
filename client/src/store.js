@@ -25,41 +25,41 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    mutateIsLogin(state, payload) {
+    mutateIsLogin (state, payload) {
       state.isLogin = payload
     },
-    mutateUserName(state, payload) {
+    mutateUserName (state, payload) {
       state.username = payload
     },
-    initialProducts(state, payload) {
+    initialProducts (state, payload) {
       state.products = payload
     },
-    mutateProducts(state, payload) {
+    mutateProducts (state, payload) {
       state.products.unshift(payload)
     },
-    mutateProductDetail(state, payload) {
+    mutateProductDetail (state, payload) {
       state.productDetail = payload
     },
-    initialCarts(state, payload) {
+    initialCarts (state, payload) {
       state.carts = payload
     },
-    mutateCarts(state, payload) {
+    mutateCarts (state, payload) {
       state.carts.push(payload)
     },
-    initialHistory(state, payload) {
+    initialHistory (state, payload) {
       state.history = payload
     },
-    mutateIsAdmin(state, payload) {
+    mutateIsAdmin (state, payload) {
       state.isAdmin = payload
     }
 
   },
   actions: {
-    login(context, payload) {
+    login (context, payload) {
       axios
         .post('/users/login', payload)
         .then(({ data }) => {
-          if(data.role === 'admin'){
+          if (data.role === 'admin') {
             localStorage.setItem('admin', data.role)
             context.commit('mutateIsAdmin', true)
           }
@@ -73,33 +73,32 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    logout(context) {
+    logout (context) {
       swal({
         title: 'Warning',
         text: 'Are you sure you want to log out?',
         icon: 'warning',
         buttons: true,
-        dangerMode: true,
+        dangerMode: true
       })
         .then((willLogout) => {
           if (willLogout) {
-            swal("Bye! See you again!", {
-              icon: "success",
+            swal('Bye! See you again!', {
+              icon: 'success'
             })
             context.commit('mutateIsLogin', false)
             context.commit('mutateUserName', null)
             context.commit('mutateIsAdmin', false)
             localStorage.clear()
-          }
-          else {
-            swal("Enjoy your time in e - commerce");
+          } else {
+            swal('Enjoy your time in e - commerce')
           }
         })
         .catch(err => {
           console.log(err)
         })
     },
-    getAllProducts(context) {
+    getAllProducts (context) {
       axios
         .get('/products')
         .then(({ data }) => {
@@ -110,7 +109,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    register(context, payload) {
+    register (context, payload) {
       // this.$router.push({ path: "Login" })
       axios
         .post('/users/', payload)
@@ -126,7 +125,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    deleteProduct(context, payloadId) {
+    deleteProduct (context, payloadId) {
       axios({
         method: 'delete',
         url: `/products/${payloadId}`,
@@ -142,7 +141,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    addProduct(context, payloadData) {
+    addProduct (context, payloadData) {
       axios({
         method: 'post',
         url: `/products/`,
@@ -165,7 +164,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    fetchProductDetail(context, payloadId) {
+    fetchProductDetail (context, payloadId) {
       axios({
         method: 'get',
         url: `/products/${payloadId}`,
@@ -180,71 +179,54 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    editProduct(context, payload) {
+    editProduct (context, payload) {
       console.log(payload)
       axios({
         method: 'put',
         url: `/products/${payload.id}`,
         headers: {
-          access_token: localStorage.getItem('token'),
+          access_token: localStorage.getItem('token')
         },
         data: payload.data
       })
-        .then(({data}) => {
-          console.log('sukses edit data',data)
+        .then(({ data }) => {
+          console.log('sukses edit data', data)
           context.dispatch('fetchProductDetail', data._id)
         })
         .catch(err => {
           console.log(err)
         })
     },
-    deleteProduct(context, payload) {
-      axios({
-        method: 'delete',
-        url: `/products/${payload}`,
-        headers: {
-          access_token: localStorage.getItem('token'),
-        }
-      })
-        .then(({data}) => {
-          console.log(`sukses delete data`,data)
-          context.dispatch('getAllProducts')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    addProductToCart(context,payload){
+    addProductToCart (context, payload) {
       axios({
         method: 'post',
         url: `/carts/`,
         headers: {
-          access_token: localStorage.getItem('token'),
+          access_token: localStorage.getItem('token')
         },
         data: payload
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           context.commit('mutateCarts', data)
           context.dispatch('getAllCarts')
         })
     },
-    getAllCarts(context) {
+    getAllCarts (context) {
       axios({
         method: 'get',
         url: `/carts/`,
         headers: {
-          access_token: localStorage.getItem('token'),
-        },
+          access_token: localStorage.getItem('token')
+        }
       })
         .then(({ data }) => {
           console.log(data)
           let cartsProduct = []
           let historyProduct = []
           data.forEach(cart => {
-            if(cart.checkOut) {
+            if (cart.checkOut) {
               historyProduct.push(cart)
-            }
-            else {
+            } else {
               cartsProduct.push(cart)
             }
           })
@@ -255,15 +237,15 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    deleteCart(context,payload){
+    deleteCart (context, payload) {
       axios({
         method: 'delete',
         url: `/carts/${payload}`,
         headers: {
-          access_token: localStorage.getItem('token'),
-        },
+          access_token: localStorage.getItem('token')
+        }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           console.log(`deleted cart data: ${data}`)
           context.dispatch('getAllCarts')
           context.dispatch('getAllProducts')
@@ -272,38 +254,36 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    checkOut(context){
+    checkOut (context) {
       axios({
         method: 'patch',
         url: `/carts/`,
         headers: {
-          access_token: localStorage.getItem('token'),
+          access_token: localStorage.getItem('token')
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           context.dispatch('getAllCarts')
         })
         .catch(err => {
           console.log(err)
         })
     },
-    confirmation(context,payload) {
+    confirmation (context, payload) {
       axios({
         method: 'patch',
         url: `/carts/${payload}`,
         headers: {
-          access_token: localStorage.getItem('token'),
+          access_token: localStorage.getItem('token')
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           context.dispatch('getAllCarts')
         })
         .catch(err => {
           console.log(err)
         })
     }
-
-
 
   }
 })

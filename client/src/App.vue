@@ -24,7 +24,7 @@
             Admin Page</a>
           </v-list-tile-content>
         </v-list-tile>
-        
+
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left>
@@ -62,35 +62,35 @@
 // import HelloWorld from "./components/HelloWorld";
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     // HelloWorld
   },
-  data() {
+  data () {
     return {
-      icons: ["dashboard", "home", "shopping_cart","history"],
-      title : ["AUTH","HOME","CART","HISTORY"],
-      page : ["/auth","/", "/carts", "/history"],
-      
-    };
+      icons: ['dashboard', 'home', 'shopping_cart', 'history'],
+      title: ['AUTH', 'HOME', 'CART', 'HISTORY'],
+      page: ['/auth', '/', '/carts', '/history']
+
+    }
   },
-  created() {
-    if(localStorage.getItem('token')) {
+  created () {
+    if (localStorage.getItem('token')) {
       this.$store.commit('mutateIsLogin', true)
       this.$store.commit('mutateUserName', localStorage.userName)
     }
     this.$store.dispatch('getAllProducts')
-    if(localStorage.getItem('admin')) {
+    if (localStorage.getItem('admin')) {
       this.$store.commit('mutateIsAdmin', true)
     }
   },
-  computed : {
-    user(){
+  computed: {
+    user () {
       return this.$store.state.username
     },
-    isAdmin(){
+    isAdmin () {
       return this.$store.state.isAdmin
     }
   }
-};
+}
 </script>

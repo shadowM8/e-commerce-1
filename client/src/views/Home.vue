@@ -17,11 +17,11 @@
 <script>
 export default {
   computed: {
-    isLogin() {
-      return this.$store.state.isLogin;
+    isLogin () {
+      return this.$store.state.isLogin
     }
   }
-};
+}
 </script>
 
 <style>

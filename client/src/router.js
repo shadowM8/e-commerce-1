@@ -41,7 +41,7 @@ export default new Router({
       path: '/auth',
       // name: 'AuthPage',
       component: AuthPage,
-      children : [
+      children: [
         {
           path: '/',
           name: 'Login',
@@ -52,8 +52,8 @@ export default new Router({
           name: 'Register',
           component: Register
         }
-      ],
-      
+      ]
+
     },
     {
       path: '/carts',
@@ -72,10 +72,10 @@ export default new Router({
     }
     // {
     //   path: '/about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     // }
   ]
 })

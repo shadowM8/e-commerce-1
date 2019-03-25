@@ -43,67 +43,65 @@
 </template>
 
 <script>
-import axios from "@/api/axios.js";
-// import editform from "@/components/EditForm.vue"
+import swal from 'sweetalert'
 export default {
   components: {
     // editform
   },
-  name: "AllProducts",
-  data() {
+  name: 'AllProducts',
+  data () {
     return {
       // upvotes: 0,
       // downvotes: 0
-      userId: localStorage.getItem("userId"),
+      userId: localStorage.getItem('userId'),
       dialog: false
-    };
+    }
   },
   methods: {
-    beautyDate(date) {
-      return new Date(date).toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+    beautyDate (date) {
+      return new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
     },
-    fetchProductDetail(id) {
-      this.$store.dispatch("fetchProductDetail", id);
-      this.redirectProduct(id);
+    fetchProductDetail (id) {
+      this.$store.dispatch('fetchProductDetail', id)
+      this.redirectProduct(id)
       // kdfkdsksf
     },
-    redirectProduct(id) {
-      this.$router.push({ path: `/product/${id}` });
+    redirectProduct (id) {
+      this.$router.push({ path: `/product/${id}` })
     },
-    deleteProduct(id) {
+    deleteProduct (id) {
       swal({
-        title: "Warning",
-        text: "Are you sure you want to delete your product?",
-        icon: "warning",
+        title: 'Warning',
+        text: 'Are you sure you want to delete your product?',
+        icon: 'warning',
         buttons: true,
         dangerMode: true
       })
         .then(willDelete => {
           if (willDelete) {
-            swal("Poof! your product is gone!", {
-              icon: "success"
-            });
-            this.$store.dispatch("deleteProduct", id);
+            swal('Poof! your product is gone!', {
+              icon: 'success'
+            })
+            this.$store.dispatch('deleteProduct', id)
           } else {
-            swal("Phew, that was close one");
+            swal('Phew, that was close one')
           }
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
   },
   computed: {
-    products() {
-      return this.$store.state.products;
+    products () {
+      return this.$store.state.products
     }
-  },
-  
-  
-};
+  }
+
+}
 </script>

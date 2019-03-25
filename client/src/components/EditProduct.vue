@@ -36,37 +36,37 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      userId: localStorage.getItem("userId")
-    };
+      userId: localStorage.getItem('userId')
+    }
   },
   methods: {
-    closeDialog() {
-      this.$emit("closedialog", false);
+    closeDialog () {
+      this.$emit('closedialog', false)
     },
-    fileUpload(e) {
-      this.product.image = e.target.files[0];
+    fileUpload (e) {
+      this.product.image = e.target.files[0]
     },
-    editProduct() {  
+    editProduct () {
       let dataProduct = {
-        name : this.product.name,
-        description : this.product.description,
-        price : this.product.price,
-        stock : this.product.stock,
+        name: this.product.name,
+        description: this.product.description,
+        price: this.product.price,
+        stock: this.product.stock
       }
       let dePayload = {
         data: dataProduct,
         id: this.product._id
-      };
-      this.$emit("closedialog", false);
-      this.$store.dispatch("editProduct", dePayload);
+      }
+      this.$emit('closedialog', false)
+      this.$store.dispatch('editProduct', dePayload)
     }
   },
   computed: {
-    product() {
-      return this.$store.state.productDetail;
+    product () {
+      return this.$store.state.productDetail
     }
   }
-};
+}
 </script>
