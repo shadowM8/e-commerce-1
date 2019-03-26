@@ -8,13 +8,13 @@ const image = require('../middlewares/image')
 router.get('/', productController.getAll)
 
 router.use(authenticate)
-
+router.get('/admin',isAdmin, productController.getAllSellerProduct)
 router.get('/:productId', productController.getOne)
 
 router.use(isAdmin)
 
 router.post('/', image.multer.single('image'), image.sendUploadToGCS, productController.create)
-router.get('/admin', productController.getAllSellerProduct)
+
 router.use('/:productId',authorize)
 
 router.put('/:productId', productController.update)

@@ -29,6 +29,15 @@ Route|HTTP|Header(s)|Request|Description|Response
 
 <br>
 
+**cart route**
+
+Route|HTTP|Header(s)|Request|Description|Response
+|---|---|---|---|---|---|
+|/carts/|POST|token|`body`:`{ product: 'product.id', quantity: 5, buyer: 'user.id' }`|create new cart|`201`:`{_id:ObjectId(''), quantity: 5, buyer:'user.id', checkout:false, confirmation: false}`
+|/carts/|GET|token|none|get all carts|`200`:`[{_id:ObjectId(''),..},{..}]`
+|/carts/|PATCH|token|none|change all carts checkout status to true|`200`:[`{_id:ObjectId(''), quantity: 5, buyer:'user.id', checkout:true,confirmation: false}`,`{_id:ObjectId(''), quantity: 4, buyer:'user.id', checkout:true,confirmation: false}`]
+|/carts/:cartId|PATCH|token|`params`:`{cartId:'cart Id'}`|change cart confirmation status to true|`200`:`{_id:ObjectId(''), quantity: 5, buyer:'user.id', checkout:true,confirmation: true}`
+
 
 
 **Usage:**
