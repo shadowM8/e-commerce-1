@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <v-btn v-if="isLogin" class="primary elevation-12" :to="{ path: '/addProduct'}">Add new Product</v-btn>
+    <v-btn v-if="isLogin && isAdmin" class="primary elevation-12" :to="{ path: '/addProduct'}">Add new Product</v-btn>
     <v-btn class="primary elevation-12" :to="{ path: '/'}">All Product List</v-btn>
     <v-layout
         align-end
@@ -19,6 +19,9 @@ export default {
   computed: {
     isLogin () {
       return this.$store.state.isLogin
+    },
+    isAdmin() {
+      return this.$store.state.isAdmin
     }
   }
 }

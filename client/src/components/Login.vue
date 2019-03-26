@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  name: 'Login',
   data: function () {
     return {
       email: '',
@@ -31,7 +32,7 @@ export default {
         password: this.password
       }
       this.$store.dispatch('login', dePayLoad)
-      this.redirect()
+      // this.redirect()
     },
     redirect () {
       this.$router.push({ path: '/' })

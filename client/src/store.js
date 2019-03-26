@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '@/api/axios.js'
 import swal from 'sweetalert'
+import router from './router'
 
 Vue.use(Vuex)
 
@@ -72,9 +73,16 @@ export default new Vuex.Store({
           localStorage.setItem('userName', data.fullName)
           context.commit('mutateUserName', data.fullName)
           context.commit('mutateIsLogin', true)
+          router.push('/')
         })
         .catch(err => {
           console.log(err)
+          swal({
+            title: "Login failed",
+            text: `${err.response.data.message}`,
+            icon: "warning",
+            button: "retry login",
+          });
         })
     },
     logout(context) {
@@ -114,7 +122,7 @@ export default new Vuex.Store({
         })
     },
     register(context, payload) {
-      // this.$router.push({ path: "Login" })
+      
       axios
         .post('/users/', payload)
         .then(({ data }) => {
