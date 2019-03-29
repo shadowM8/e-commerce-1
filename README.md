@@ -48,3 +48,5 @@ $ npm install
 $ npm run dev
 ```
 And don't forget to fill the .env file 
+
+client : http://simple-ecommerce.greensnorlax.xyz

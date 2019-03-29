@@ -11,7 +11,7 @@
             <div align-content-justify>{{ product.name }}</div>
             <div align-content-justify>Price : {{ product.price }}</div>
             <div align-content-justify>Stock : {{ product.stock }}</div>
-            <v-alert
+            <v-alert v-if="product.stock === 0"
             :value="true"
             type="error">
             {{product.name}} is sold out !

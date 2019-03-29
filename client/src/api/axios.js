@@ -1,5 +1,5 @@
 import axios from 'axios'
-const serverUrl = `http://localhost:3000`
+const serverUrl = `http://35.187.245.8`
 
 export default
 axios.create({
