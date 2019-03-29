@@ -7,6 +7,7 @@ router.use(authenticate)
 router.post('/',  cartController.create)
 router.get('/', cartController.getAll)
 router.patch('/', cartController.checkOut)
+router.get('/admin', cartController.getAllAdminCarts)
 
 router.use('/:cartId', authorizeCart )
 

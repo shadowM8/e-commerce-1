@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "alertifyjs": "^1.11.2",
     "axios": "^0.18.0",
     "sweetalert": "^2.1.2",
     "vue": "^2.6.6",

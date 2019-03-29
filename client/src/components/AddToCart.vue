@@ -11,7 +11,12 @@
             <div align-content-justify>{{ product.name }}</div>
             <div align-content-justify>Price : {{ product.price }}</div>
             <div align-content-justify>Stock : {{ product.stock }}</div>
-            <form v-on:submit.prevent="addProductToCart">
+            <v-alert
+            :value="true"
+            type="error">
+            {{product.name}} is sold out !
+            </v-alert>
+            <form v-if="product.stock > 0" v-on:submit.prevent="addProductToCart">
               <v-text-field type="number" prepend-icon="local_atm" label="product quantity" v-model="quantity"></v-text-field>
               <!-- <input @change="fileUpload" type="file" class="form-control" id="file"> -->
               <v-btn type="submit" color="primary">Submit</v-btn>

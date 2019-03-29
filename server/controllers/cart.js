@@ -118,5 +118,26 @@ module.exports = {
                 console.log(err)
                 res.status(500).json(err)
             })
+    },
+    getAllAdminCarts: (req,res) => {
+        Cart
+            .find({}).populate({
+                path: 'product',
+                populate: {path: 'seller'}
+            }).populate('buyer')
+            .then(carts => {
+                let sellerCarts = []
+                carts.forEach(cart => {
+                    // console.log({cart:cart.product.seller._id, user: req.authenticUser.id})
+                    // console.log(req.authenticUser.id)
+                    if(String(cart.product.seller._id) === req.authenticUser.id) {
+                        sellerCarts.push(cart)
+                    }
+                })
+                res.status(200).json(sellerCarts)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
 }

@@ -2,6 +2,7 @@
   <v-app>
     <v-navigation-drawer app fixed clipped width="190">
       <v-list>
+        <div v-if="!isAdmin">
         <v-list-tile v-for="(i,index) in 4" :to="{path: page[i-1]}" :key="index">
           <v-list-tile-action>
             <v-icon>{{ icons[i-1] }}</v-icon>
@@ -10,20 +11,31 @@
             <v-list-tile-title>{{ title[i-1]  }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        </div>
+        <div v-if="isAdmin">
+        <v-list-tile  v-for="(i,index) in 3" :to="{path: adminpage[i-1]}" :key="index">
+          <v-list-tile-action>
+            <v-icon>{{ adminicons[i-1] }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ admintitle[i-1]  }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        </div>
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>verified_user</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
+            <div v-if="isAdmin">
+              ADMIN {{user}}
+            </div>
+            <div v-if="!isAdmin">
             USER {{user}}
+            </div>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-content v-if="isAdmin">
-            <v-btn :to="{ path: '/admin'}"><v-icon>local_library</v-icon>
-            Admin Page</v-btn>
-          </v-list-tile-content>
-        </v-list-tile>
+        
 
       </v-list>
     </v-navigation-drawer>
@@ -69,8 +81,11 @@ export default {
   data () {
     return {
       icons: ['dashboard', 'home', 'shopping_cart', 'history'],
-      title: ['AUTH', 'HOME', 'CART', 'HISTORY'],
-      page: ['/auth', '/', '/carts', '/history']
+      title: ['LOGIN', 'HOME', 'CART', 'HISTORY'],
+      page: ['/auth', '/', '/carts', '/history'],
+      adminicons: ['dashboard','home','history'],
+      admintitle: ['LOGIN','HOME','ADMIN'],
+      adminpage: ['/auth','/','/admin']
 
     }
   },

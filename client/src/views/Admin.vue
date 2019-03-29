@@ -1,57 +1,65 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex my-2 class="elevation-12" xs12 v-for="(product,index) in products" :key="index">
+      <v-flex my-2 class="elevation-12" xs12 v-for="(cart,index) in carts" :key="index">
         <v-card>
           <v-layout>
             <v-flex xs3>
               <v-layout ml-2 fill-height align-center justify-content-center>
-                <v-img :src="product.image" aspect-ratio="2.75"></v-img>
+                <v-img :src="cart.product.image" aspect-ratio="2.75"></v-img>
               </v-layout>
             </v-flex>
 
-            <v-flex xs7 fill-height>
+            <v-flex xs5 fill-height>
               <v-layout>
                 <v-card-title primary-title>
                   <div>
                     <h3 class="headline mb-0 text-center">
-                      <a @click="fetchProductDetail(product._id)">
-                        <b>{{product.name}}</b>
+                      <a @click="fetchProductDetail(cart.product._id)">
+                        <b>{{cart.product.name}}</b>
                       </a>
                     </h3>
 
-                    <span class="blue--text">Released {{beautyDate(product.createdAt)}} </span>
-                    <span class="black--text">| Item stock left : {{product.stock}} </span>
-                    <span class="black--text">| Item Price each {{beautyPrice(product.price)}}</span>
+                    <span class="blue--text">Released {{beautyDate(cart.product.createdAt)}} </span>
+                    <!-- <span class="black--text">| Item stock left : {{cart.product.stock}} </span> -->
+                    <span class="black--text">| Item Price each {{beautyPrice(cart.product.price)}}</span>
                   </div>
                 </v-card-title>
               </v-layout>
             </v-flex>
             <v-flex xs2>
-              <!-- <v-layout fill-height align-center column>
-                <div v-if="cart.confirmation === false">
-                  <v-card-text>Apakah barang sudah sampai?</v-card-text>
-                  <v-btn>
-                  <a @click="confirmation(cart._id)">
-                    <v-icon>done</v-icon>
-                  </a>
-                  </v-btn>
+              <v-layout fill-height align-center column>
+                <div >
+                  <v-card-text>Dibeli oleh : <b>{{cart.buyer.fullName}}</b></v-card-text>
+                </div>
+                <div >
+                  <v-card-text>Sebanyak : {{cart.quantity}} buah </v-card-text>
+                </div>
+              </v-layout>
+            </v-flex>
+            <v-flex xs2>
+              <v-layout fill-height align-center column>
+                <div >
+                  <v-card-text>Status pengiriman barang :</v-card-text>
                 </div>
                 <div v-if="cart.confirmation === true">
-                    <v-card-text>Barang Telah Sampai, terimakasih</v-card-text>
+                    <v-card-text>Barang Telah Dikonfirmasi</v-card-text>
                 </div>
-              </v-layout> -->
+                <div v-if="cart.confirmation === false">
+                    <v-card-text>Barang Belum Dikonfirmasi</v-card-text>
+                </div>
+              </v-layout>
             </v-flex>
           </v-layout>
         </v-card>
       </v-flex>
       <v-card>
-          <v-card-text>Total Transaction User</v-card-text>
+          <v-card-text>Total Transaction Seller</v-card-text>
           <v-card-text>
-              Total Product Price: {{beautyPrice(totalPrice(products))}}
+              Total Profit : {{beautyPrice(totalPrice(carts))}}
           </v-card-text>
           <v-card-text>
-              Barang Yang Telah Diterima: {{totalReceived(products)}}
+              Barang Yang Sudah Dikonfirmasi: {{totalReceived(carts)}}
           </v-card-text>
       </v-card>
 
@@ -92,7 +100,7 @@ export default {
       let sum = 0
       carts.forEach(cart => {
         //   console.log('ini isi',cart.product.price)
-        sum += (cart.price)
+        sum += (cart.product.price * cart.quantity) 
       })
       return sum
     },
@@ -119,8 +127,8 @@ export default {
     
   },
   computed: {
-    products () {
-      return this.$store.state.adminProduct
+    carts () {
+      return this.$store.state.adminCart
     }
   },
   created () {

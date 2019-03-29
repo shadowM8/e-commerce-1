@@ -38,7 +38,7 @@ export default {
         password: this.password
       }
       this.$store.dispatch('register', dePayLoad)
-      this.redirect()
+      // this.redirect()
     },
     redirect () {
       this.$router.push({ path: '/auth' })

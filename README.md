@@ -12,7 +12,6 @@ Route|HTTP|Header(s)|Request|Description|Response
 |---|---|---|---|---|---|
 |/users/register|POST|none|`body`: `{ email: 'anton@mail.com', password: 'secret' , fullName: 'anton wibisono' }`|register for new user| `201`: `{ _id: ObjectId(''), email: 'anton@mail.com', password: 'HashedPassword' }`
 |/users/login|POST|none|`body`: `{ email: 'anton@mail.com', password: 'secret'}`|endpoint for user login into app| `200`:`{token : ... }`
-
 |/users/|GET|token|none|fetch all user data (authenticated user only)|`200`:`[{_id: ObjectId(''), email: 'dimitri@mail.com', password: 'HashedPassword'}, {_id: ObjectId(''), email: 'anton@mail.com', password: 'HashedPassword'} ]`
 
 <br>

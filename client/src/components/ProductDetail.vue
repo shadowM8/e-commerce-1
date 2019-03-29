@@ -4,7 +4,7 @@
       <v-flex my-2 class="elevation-12" xs12>
         <v-card>
           <v-layout mx-2>
-            <v-flex>
+            <!-- <v-flex>
               <v-layout fill-height align-center justify-content-center row wrap>
                 <v-btn>
                   <v-icon>expand_less</v-icon>
@@ -14,7 +14,7 @@
                   <v-icon>expand_more</v-icon>
                 </v-btn>
               </v-layout>
-            </v-flex>
+            </v-flex> -->
             <v-flex>
               <v-card-title primary-title>
                 <div>
@@ -37,11 +37,17 @@
                   <EditProduct @closedialog="closeDialog"/>
                 </v-dialog>
               </v-card-actions>
-              <v-card-actions v-if="userId !== product.seller._id">
+              <v-card-actions v-if="userId !== product.seller._id && product.stock > 0">
                 <v-dialog v-model="dialog">
                   <v-btn slot="activator" flat color="success"><v-icon>shopping_cart</v-icon> Add Product To Cart</v-btn>
                   <AddToCart @closedialog="closeDialog"/>
                 </v-dialog>
+              </v-card-actions>
+              <v-card-actions v-if="userId !== product.seller._id && product.stock === 0">
+                
+                  <v-btn slot="activator" flat color="error"><v-icon>shopping_cart</v-icon> Product is sold out</v-btn>
+                
+                
               </v-card-actions>
             </v-flex>
           </v-layout>

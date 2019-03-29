@@ -3,13 +3,14 @@ import Vuex from 'vuex'
 import axios from '@/api/axios.js'
 import swal from 'sweetalert'
 import router from './router'
+import alertify from 'alertifyjs'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     products: [],
-    adminProduct: [],
+    adminCart: [],
     carts: [],
     history: [],
     username: 'username',
@@ -54,8 +55,8 @@ export default new Vuex.Store({
     mutateIsAdmin(state, payload) {
       state.isAdmin = payload
     },
-    initialAdminProduct(state, payload) {
-      state.adminProduct = payload
+    initialAdminHistory(state, payload) {
+      state.adminCart = payload
     }
 
   },
@@ -106,8 +107,9 @@ export default new Vuex.Store({
             swal('Enjoy your time in e - commerce')
           }
         })
-        .catch(err => {
-          console.log(err)
+        .catch(({response}) => {
+          console.log(response.data)
+          alertify.error('error logout!')
         })
     },
     getAllProducts(context) {
@@ -119,22 +121,24 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     register(context, payload) {
-      
       axios
         .post('/users/', payload)
         .then(({ data }) => {
-          console.log(data)
+          
           swal({
             title: 'Congratulations!',
             text: 'Your account has been created, please go to login page to log in',
             icon: 'success'
           })
+          router.push('/auth')
         })
         .catch(err => {
-          console.log(err)
+          // console.log(err.response.data.err)
+          alertify.error(err.response.data.err.join(', '))
         })
     },
     deleteProduct(context, payloadId) {
@@ -151,6 +155,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     addProduct(context, payloadData) {
@@ -174,6 +179,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     fetchProductDetail(context, payloadId) {
@@ -189,6 +195,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     editProduct(context, payload) {
@@ -207,6 +214,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     addProductToCart(context, payload) {
@@ -221,6 +229,12 @@ export default new Vuex.Store({
         .then(({ data }) => {
           context.commit('mutateCarts', data)
           context.dispatch('getAllCarts')
+          context.dispatch('getAllProducts')
+          router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     getAllCarts(context) {
@@ -264,6 +278,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     checkOut(context) {
@@ -279,6 +294,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     confirmation(context, payload) {
@@ -294,22 +310,24 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          alertify.error(err.response.data.message)
         })
     },
     getAdminHistory(context, payload) {
       axios({
         method: 'get',
-        url: `/products/admin`,
+        url: `/carts/admin`,
         headers: {
           access_token: localStorage.getItem('token')
         }
 
       })
         .then(({ data }) => {
-          context.commit('initialAdminProduct', data)
+          context.commit('initialAdminHistory', data)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(({response}) => {
+          console.log(response.data)
+          alertify.error(response.data.message)
         })
     }
 

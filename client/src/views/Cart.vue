@@ -70,7 +70,7 @@ export default {
       let sum = 0
       carts.forEach(cart => {
         //   console.log('ini isi',cart.product.price)
-        sum += (cart.product.price)
+        sum += (cart.product.price * cart.quantity)
       })
       return sum
     },
